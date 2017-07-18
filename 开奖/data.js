@@ -77,7 +77,8 @@ function getPlayedFun(cb){
 	
 	client.query("select id, ruleFun from blast_played", function(err, data){
 		if(err){
-			log('读取玩法配置出错：'+err.message);
+			log(err.message);
+			//log('读取玩法配置出错：'+err.message);
 		}else{
 			data.forEach(function(v){
 				played[v.id]=v.ruleFun;
@@ -413,6 +414,7 @@ function setPj(sqls, data){
 		log('连接数据库出错，休眠%f秒继续...'.format(config.errorSleepTime));
 		setTimeout(setPj, config.errorSleepTime*1000, sqls, data);
 	}else{
+		log("连接数据库成功！");
 		client.query(sqls.join(';'), function(err,result){
 			if(err){
 				console.log(err);
